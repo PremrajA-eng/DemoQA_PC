@@ -1,0 +1,56 @@
+package OpenQA.testcases;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.*;
+
+public class OpenUrl{
+
+    WebDriver driver;
+
+    // Runs once before all test methods
+    @BeforeClass
+    public void setup() {
+        System.out.println("Launching Browser");
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+    }
+
+    // Runs before each test method
+    @BeforeMethod
+    public void openApp() {
+        System.out.println("Opening Application");
+        driver.get("https://www.google.com");
+    }
+
+    // Test case 1
+    @Test(priority = 1)
+    public void searchTest() throws InterruptedException {
+        System.out.println("Executing Search Test");
+        driver.findElement(By.name("q")).sendKeys("Selenium");
+        Thread.sleep(2000);
+    }
+
+    // Test case 2
+    @Test(priority = 2)
+    public void titleTest() {
+        System.out.println("Checking Title");
+        String title = driver.getTitle();
+        System.out.println("Title is: " + title);
+    }
+
+    // Runs after each test method
+    @AfterMethod
+    public void closeApp() {
+        System.out.println("Closing Application");
+        driver.navigate().to("about:blank");
+    }
+
+    // Runs once after all test methods
+    @AfterClass
+    public void tearDown() {
+        System.out.println("Closing Browser");
+        driver.quit();
+    }
+}
